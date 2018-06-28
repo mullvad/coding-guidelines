@@ -29,11 +29,14 @@ macros.
 
 ### Generic Rust type improvement tips
 
-* If a piece of data (eg. argument) can be obtained as an `OsStr` and will in the end be used as
-  such as well (like a `Path`), try to not go through making it a `str` and imposing UTF-8
-  restrictions unnecessarily
-* If you ever see an argument of type `&Vec<...>` you probably want `&[...]`
-* If you ever see an argument of type `&String` you probably want `&str`
+* Avoid unnecessary conversions that introduce either extra possible error states or loss of data/
+  precision if possible. A common example being `OsString -> String -> Path`. `Path` is based on
+  `OsString` and converting `OsString -> Path` is both free and infallible. While
+  `OsString -> String` must be done either as a lossy conversion or with the possibility of getting
+  an error if the data is not correct UTF-8.
+* The appropriate borrowed versions of `Vec<T>`, `String` and `PathBuf` are `&[T]`, `&str` and
+  `&Path`. Not `&Vec<T>`, `&String` and `&PathBuf`.
+
 
 [rustfmt configuration]: https://github.com/mullvad/mullvadvpn-app/blob/master/rustfmt.toml
 [EditorConfig settings]: https://github.com/mullvad/mullvadvpn-app/blob/master/.editorconfig
