@@ -30,12 +30,25 @@ macros.
 ### Generic Rust type improvement tips
 
 * Avoid unnecessary conversions that introduce either extra possible error states or loss of data/
-  precision if possible. A common example being `OsString -> String -> Path`. `Path` is based on
-  `OsString` and converting `OsString -> Path` is both free and infallible. While
-  `OsString -> String` must be done either as a lossy conversion or with the possibility of getting
-  an error if the data is not correct UTF-8.
+  precision if possible.
+  ```rust
+  // DONT: Will return an error if the content is not correct UTF-8.
+  let path = env::var("A_PATH_VARIABLE").map(PathBuf::from);
+
+  // DO: Does not enforce any encoding on the path.
+  let path = env::var_os("A_PATH_VARIABLE").map(PathBuf::from);
+  ```
 * The appropriate borrowed versions of `Vec<T>`, `String` and `PathBuf` are `&[T]`, `&str` and
   `&Path`. Not `&Vec<T>`, `&String` and `&PathBuf`.
+  ```rust
+  // DONT
+  fn sum(data: &Vec<u32>) -> u32 { ... }
+  fn read_file(path: &PathBuf) -> Vec<u8> { ... }
+
+  // DO
+  fn sum(data: &[u32]) -> u32 { ... }
+  fn read_file(path: &Path) -> Vec<u8> { ... }
+  ```
 
 
 [rustfmt configuration]: https://github.com/mullvad/mullvadvpn-app/blob/master/rustfmt.toml
