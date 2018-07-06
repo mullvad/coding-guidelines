@@ -22,5 +22,73 @@ In general this is what to follow:
 * [Rust](rust.md)
 
 
+## Git
+
+### Commit messages
+
+Here is a generally nice guide to how to write good commit messages:
+https://chris.beams.io/posts/git-commit/
+
+So sum it up the most important parts are:
+
+* Capitalize the subject line.
+* Do not end the subject line with a period.
+* Use the imperative mood in the subject line.
+
+
+## Changelogs
+
+Keep a changelog for every project/library according to the guidelines and rules set up at
+[keep a changelog]. For inspiration see how we manage it in the main Mullvad VPN app repo
+[here](https://github.com/mullvad/mullvadvpn-app/blob/master/CHANGELOG.md).
+
+* Keep the categories for every release in the same order as on the website:
+  * _Added_ - for new features.
+  * _Changed_ - for changes in existing functionality.
+  * _Deprecated_ - for soon-to-be removed features.
+  * _Removed_ - for now removed features.
+  * _Fixed_ - for any bug fixes.
+  * _Security_ - in case of vulnerabilities.
+* Add new items to the end of the list of changes under the appropriate category. This way they
+  automatically end up in chronological order within each category.
+* Use the imperative mood in the entries. This is to stay consistent within the changelog itself
+  and to stay consistent with how git commit messages are written. In other words use "increase",
+  not "increased". Use "add" not "added". The exception to this are the titles for the categories.
+* Make sure only items that changed since the last release are present. For example:
+  ```
+  ### Changed
+  - Increase connection timeout to 30 seconds.
+  ...
+  - Increase timeout for connections from 30 to 45 seconds.
+  ```
+  Would not be very intuitive for a reader. Because comparing the previous release with this one
+  all that happened is that the timeout increased to 45 seconds. That it was set to 30 at some
+  point between does not matter. When multiple changes happen to the same thing within a single
+  release like this, join the items:
+  ```
+  ### Changed
+  - Increase connection timeout to 45 seconds.
+  ```
+* If the project has many changes that are platform specific, prefer to add sub-headings for the
+  platform under the relevant categories over writing "... on \<platform\>" in many entries.
+  Example:
+  ```
+  ## Fixed
+  - Malformed log entry on Linux.
+  - Wrong string delimiter in parser.
+  - Invalid Linux syscall number.
+  ```
+  Then instead use:
+  ```
+  ## Fixed
+  - Wrong string delimiter in parser.
+
+  ### Linux
+  - Malformed log entry.
+  - Invalid syscall number.
+  ```
+
+
 [EditorConfig settings]: https://github.com/mullvad/mullvadvpn-app/blob/master/.editorconfig
 [BOM]: https://en.wikipedia.org/wiki/Byte_order_mark
+[keep a changelog]: https://keepachangelog.com/en/1.0.0/
