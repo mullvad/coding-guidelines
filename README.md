@@ -35,6 +35,34 @@ So sum it up the most important parts are:
 * Do not end the subject line with a period.
 * Use the imperative mood in the subject line.
 
+### History
+
+Prefer to let the history represent how the project evolves rather than exactly how the developer
+experimented to get there.
+
+So for a given feature branch, each line of code should usually only have to be changed in one
+commit. The developer might experiments back and fourth with different values or correct
+spelling errors etc. But the end result of the work should be the addition of the correct values
+and the correctly spelled versions of what was added. When looking back in history, the intermediate
+"backups" of the code the developer did does not add much value.
+
+Basically instead of this history:
+```
+| * ae83f10 (HEAD -> add-feature) Fix malformed linker argument
+| * 8888af9 Lower TCP timeout to 30 seconds
+| * c8e7e68 Add linker argument to CI config
+| * 281a8e8 Add a timeout to TCP connections
+|/
+* 4d3ca65 (origin/master, master) Merge branch 'previous-feature'
+```
+Consider squashing it to something like this before merge:
+```
+| * 6e84f10 (HEAD -> add-feature) Add linker argument to CI config
+| * 381a8e9 Add a 30 second timeout to TCP connections
+|/
+* 4d3ca65 (origin/master, master) Merge branch 'previous-feature'
+```
+
 
 ## Changelogs
 
