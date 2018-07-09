@@ -40,13 +40,13 @@ So sum it up the most important parts are:
 Prefer to let the history represent how the project evolves rather than exactly how the developer
 experimented to get there.
 
-So for a given feature branch, each line of code should usually only have to be changed in one
-commit. The developer might experiments back and fourth with different values or correct
-spelling errors etc. But the end result of the work should be the addition of the correct values
-and the correctly spelled versions of what was added. When looking back in history, the intermediate
-"backups" of the code the developer did does not add much value.
+So for a given feature branch, there should generally not be "fix" commits fixing things from
+earlier commits in that same branch. The developer might experiments back and fourth with different
+values or correct spelling errors etc. But the end result of the work should be the addition of the
+correct values and the correctly spelled versions of what was added. When looking back in history,
+the intermediate "backups" of the code the developer did does not add much value.
 
-Basically instead of this history:
+Example, instead of this history:
 ```
 | * ae83f10 (HEAD -> add-feature) Fix malformed linker argument
 | * 8888af9 Lower TCP timeout to 30 seconds
