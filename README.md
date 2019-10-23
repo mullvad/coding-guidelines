@@ -7,8 +7,9 @@ program code in various languages and tools.
 ## Code review and PR process
 
 As a remote team, a lot of work is done by individuals without too much interaction.
-It is recommended to discuss solutions and problems early and often. And show code before it is
-done if relevant. Doing so avoids too long-drawn PRs where the entire solution is new to the
+It is recommended to discuss solutions and problems early and often. Show proof of concept code to
+evaluate if the chosen abstraction seems correct before going through with major refactoring using
+it. Doing so avoids too long-drawn PRs where the entire solution is new to the
 reviewer when the PR is submitted. Mostly relevant for larger changes of course, and changes
 where which solution to use is not obvious.
 
