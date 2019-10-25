@@ -38,13 +38,9 @@ You can also mark the PR as a draft on Github.
 
 ## UI design
 
-At the time of writing this we don't have anyone dedicated fully to UI and UX. We don't have any UX
-professional on the team. We solve all UI design by iterating and discussing in the team.
-This generally works out quite well. But there is some friction to reach the end results, and it
-takes time. Since we know from history that most UI changes will receive a fair amount of
-feedback and be reworked a couple of times, it is even more important to start gathering feedback
-on UI design even earlier than on code and programming solutions.
-
+For UI design, we prefer to iterate quickly and collaboratively. To agree upon the design before
+writing any code for it. This is to avoid double-work where the implemented design will need to
+be reworked after receiving feedback too late.
 
 ## Code formatting
 
