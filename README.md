@@ -81,9 +81,12 @@ So sum it up the most important parts are:
 ### History
 
 Prefer to let the history represent how the project evolves rather than exactly how the developer
-experimented to get there.
+experimented to get there. There is value in trying to keep the history relatively clean and
+understandable. However, we should not spend a considerable amount of time just grooming history.
+So the following advice is on a best-effort basis. If the history becomes hard to rearrange, just
+clean the easy parts and squash or leave the rest as is.
 
-So for a given feature branch, there should generally not be "fix" commits fixing things from
+For a given feature branch, there should generally not be "fix" commits fixing things from
 earlier commits in that same branch. The developer might experiment back and forth with different
 values or correct spelling errors etc. But the end result of the work should be the addition of the
 correct values and the correctly spelled versions of what was added. When looking back in history,
