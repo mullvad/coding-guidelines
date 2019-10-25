@@ -42,7 +42,7 @@ At the time of writing this we don't have anyone dedicated fully to UI and UX. W
 professional on the team. We solve all UI design by iterating and discussing in the team.
 This generally works out quite well. But there is some friction to reach the end results, and it
 takes time. Since we know from history that most UI changes will receive a fair amount of
-feedback and be reworked a couple of times, it is even more important to start gather feedback
+feedback and be reworked a couple of times, it is even more important to start gathering feedback
 on UI design even earlier than on code and programming solutions.
 
 
