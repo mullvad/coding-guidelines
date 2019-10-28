@@ -1,9 +1,48 @@
-# Mullvad coding guidelines
+# Mullvad development guidelines
 
 These documents aim to be the source of information for how we architect, design and format
 program code in various languages and tools.
 
-## Formatting
+
+## Code review and PR process
+
+As a remote team, a lot of work is done by individuals without too much interaction.
+It is recommended to discuss solutions and problems early and often. Show proof of concept code to
+evaluate if the chosen abstraction seems correct before going through with major refactoring using
+it. Doing so avoids too long-drawn PRs where the entire solution is new to the
+reviewer when the PR is submitted. Mostly relevant for larger changes of course, and changes
+where which solution to use is not obvious.
+
+### Assigning / assigned reviewer
+
+Most PRs should have one reviewer. But sometimes it makes sense to have multiple. When creating
+a PR, assign someone who is knowledgeable in the parts of the code that is touched. If someone
+on the team is working on a high priority issue with a tight schedule, try to avoid choosing them
+unless they are the only one who can review the particular code in question.
+
+If you are not the assigned reviewer you are of course still welcome to read and comment on code.
+After all, all merged code becomes everyone's code. But since you have probably not been in the
+loop regarding this change, you might not be as informed as the author and the assigned reviewer.
+Please bear this in mind and don't drive-by comment on things you are not familiar with. If you
+really want to understand please ask the author via some other medium if they have the time
+to explain the code in question, don't let it slow down the PR process.
+
+### Work in progress (WIP) PRs
+
+If you want to show your code to the reviewer early on, and you prefer a PR where comments
+can be left over just sharing a remote branch. Then it's fine to submit a WIP PR. But it
+should be marked as such. Add the WIP label and contact the reviewer and explain the
+situation/intent.
+
+You can also mark the PR as a draft on Github.
+
+## UI design
+
+For UI design, we prefer to iterate quickly and collaboratively. To agree upon the design before
+writing any code for it. This is to avoid double-work where the implemented design will need to
+be reworked after receiving feedback too late.
+
+## Code formatting
 
 See the [EditorConfig settings] in the main Mullvad VPN app repo for file format standards to
 follow.
@@ -38,10 +77,13 @@ So sum it up the most important parts are:
 ### History
 
 Prefer to let the history represent how the project evolves rather than exactly how the developer
-experimented to get there.
+experimented to get there. There is value in trying to keep the history relatively clean and
+understandable. However, we should not spend a considerable amount of time just grooming history.
+So the following advice is on a best-effort basis. If the history becomes hard to rearrange, just
+clean the easy parts and squash or leave the rest as is.
 
-So for a given feature branch, there should generally not be "fix" commits fixing things from
-earlier commits in that same branch. The developer might experiments back and fourth with different
+For a given feature branch, there should generally not be "fix" commits fixing things from
+earlier commits in that same branch. The developer might experiment back and forth with different
 values or correct spelling errors etc. But the end result of the work should be the addition of the
 correct values and the correctly spelled versions of what was added. When looking back in history,
 the intermediate "backups" of the code the developer did does not add much value.
@@ -115,6 +157,20 @@ Keep a changelog for every project/library according to the guidelines and rules
   - Malformed log entry.
   - Invalid syscall number.
   ```
+
+## Dead code
+
+Don't keep dead code laying around generally. The cost of dead code is the extra complexity of
+understanding the code base as well as every developer coming there thinking "Oh, maybe we can
+remove this" and goes through the same hoops just to realize it's kept for some reason not in
+the code itself.
+
+Exceptions do exist of course. If one PR adds dead code and you plan on using it in the upcoming
+PR right after or in the coming days. Then it might be fine. That might sometimes be preferred over
+waiting with the first PR until everything is done and submitting one huge PR. But it's a case
+by case basis and is best resolved between developer and reviewer.
+
+Consider adding comments to dead code explaining why it is justified leaving it there.
 
 
 [EditorConfig settings]: https://github.com/mullvad/mullvadvpn-app/blob/master/.editorconfig
