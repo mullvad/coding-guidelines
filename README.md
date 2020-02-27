@@ -59,6 +59,7 @@ In general this is what to follow:
 ## Language specific guidelines
 
 * [Rust](rust.md)
+* [Bash](bash.md)
 
 
 ## Git
