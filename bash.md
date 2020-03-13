@@ -1,5 +1,11 @@
 # Bash coding guidelines
 
+This document outlines best practices for writing Bash shell scripts. Except the things in this
+document it is recommended to use [`shellcheck`] in order to find potential bugs and write
+nice code.
+
+[`shellcheck`]: https://www.shellcheck.net/
+
 ## Shebang
 
 Start a Bash script with the following to make it parse consistently.
