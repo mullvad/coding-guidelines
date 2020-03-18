@@ -56,6 +56,32 @@ In general this is what to follow:
 * Only commit LF (`\n`) line endings to git. If you configure git to convert to and from CRLF
   (`\r\n`) in the working directory that is fine, but only commit LF line endings.
 
+## Variable naming
+
+### Files, paths and directories
+
+Having variables that in some way represent files in the filesystem is very common.
+If they always follow the same naming pattern the developer does not need to get creative,
+and the reader will be familiar more often.
+
+* `foo_path` - Variables containing a path to a **file**, both absolute and relative paths.
+  Examples include `/tmp/lol.data`, `./output.log`.
+
+* `foo_dir` - Variables containing a path to a **directory**, both absolute and relative paths.
+  Examples include `/tmp`, `./output`, `../foo/bar`. Their values should (usually) not end with
+  a path separator (`/`).
+
+* `foo_filename` - Variables containing filenames that are not paths. Usually used to build
+  paths with by concatenating it with a `_path` or `_dir`.
+  Example: `foo.log`.
+
+* `foo_dirname` - Variables containing a directory name that is not a path.
+
+In the cases where a variable contains just parts of a path or filename (`".exe"`),
+or a formatting string that will compute to a path (`"/var/log/my_program.{}.log"`).
+Then include `prefix`, `suffix`, `template` or similar relevant identifier in the end of the
+variable name.
+
 ## Language specific guidelines
 
 * [Rust](rust.md)
