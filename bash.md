@@ -6,6 +6,11 @@ nice code.
 
 [`shellcheck`]: https://www.shellcheck.net/
 
+## Filename
+
+Bash script files should follow the `kebab-case.sh` style convention unless special circumstances
+mandates something else.
+
 ## Shebang
 
 Start a Bash script with the following to make it parse consistently.
