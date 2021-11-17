@@ -70,6 +70,25 @@ prefer to make the argument mandatory and pass `.` instead.
 Environment variables and arguments to the script are considered constants. But arguments in
 functions are not constants.
 
+## Conditions and branching
+
+Use `[[` for conditions, not `[`.
+
+### Check if variable is defined
+
+Since the script likely uses `set -u` it's an error to access undefined variables. The proper way
+to check if a variable is set or unset is with `[[ -z ${my_variable+x} ]]`. Example:
+
+```bash
+if [[ -z ${product_version+x} ]]; then
+    echo "Please pass product version as first argument"
+    exit 1
+fi
+```
+
+Prefer the above over defining the variable as the empty string, do some processing and then check
+if it's still empty or not.
+
 ### Namespace
 
 Use `local` for variables inside functions unless they need to be global for some reason
