@@ -105,7 +105,13 @@ function cowsay {
 
 ## Functions
 
-Functions use `snake_case` names.
+* Functions use `snake_case` names.
+* Functions are declared with the `function` keyword and no parenthesis:
+  ```bash
+  function name_of_function {
+      ...
+  }
+  ```
 
 ## Formatting
 
