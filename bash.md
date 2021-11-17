@@ -46,6 +46,11 @@ cd "$SCRIPT_DIR"
 
 The above is the most cross platform way of obtaining the directory of the script.
 
+The exception to the above is if the script is intended to do something in the current
+working directory. For example if an argument to the script is the directory to perform
+some work on, and that argument defaults to the current working directory. In these cases,
+prefer to make the argument mandatory and pass `.` instead.
+
 ## Variables
 
 ### Constants vs other variables
