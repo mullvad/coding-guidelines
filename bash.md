@@ -46,6 +46,11 @@ cd "$SCRIPT_DIR"
 
 The above is the most cross platform way of obtaining the directory of the script.
 
+The exception to the above is if the script is intended to do something in the current
+working directory. For example if an argument to the script is the directory to perform
+some work on, and that argument defaults to the current working directory. In these cases,
+prefer to make the argument mandatory and pass `.` instead.
+
 ## Variables
 
 ### Constants vs other variables
@@ -65,6 +70,25 @@ The above is the most cross platform way of obtaining the directory of the scrip
 Environment variables and arguments to the script are considered constants. But arguments in
 functions are not constants.
 
+## Conditions and branching
+
+Use `[[` for conditions, not `[`.
+
+### Check if variable is defined
+
+Since the script likely uses `set -u` it's an error to access undefined variables. The proper way
+to check if a variable is set or unset is with `[[ -z ${my_variable+x} ]]`. Example:
+
+```bash
+if [[ -z ${product_version+x} ]]; then
+    echo "Please pass product version as first argument"
+    exit 1
+fi
+```
+
+Prefer the above over defining the variable as the empty string, do some processing and then check
+if it's still empty or not.
+
 ### Namespace
 
 Use `local` for variables inside functions unless they need to be global for some reason
@@ -81,7 +105,13 @@ function cowsay {
 
 ## Functions
 
-Functions use `snake_case` names.
+* Functions use `snake_case` names.
+* Functions are declared with the `function` keyword and no parenthesis:
+  ```bash
+  function name_of_function {
+      ...
+  }
+  ```
 
 ## Formatting
 
