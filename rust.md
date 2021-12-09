@@ -50,6 +50,41 @@ macros.
   fn read_file(path: &Path) -> Vec<u8> { ... }
   ```
 
+## Unsafe code
+
+### Writing unsafe code (`unsafe fn`)
+
+When you write an `unsafe fn` function it should always have a `# Safety` section in its
+documentation stating what the user must do in order to not cause undefined behavior
+when calling it.
+
+### Calling unsafe code (`unsafe {...}`)
+
+When you use an `unsafe {}` block, it means you as a caller must uphold some contract/
+invariant that the code you call can't express in such a way that the compiler enforces it.
+This should be documented with a `// SAFETY:` comment just above the unsafe block,
+except for trivial cases.
+
+Keep each `unsafe {}` block as small as possible without complicating the code too much.
+This allows you to better document all the invariants you uphold individually.
+
+Prefer:
+```rust
+/// SAFETY: The pointer points to a valid StoreHere struct.
+unsafe { fetch_current(&mut store_here) };
+/// SAFETY: All arguments are powers of two
+unsafe { unsafe_alloc_special(4, 512) };
+```
+
+Over:
+```rust
+// SAFETY: The arguments are sane
+unsafe {
+    fetch_current(&mut store_here);
+    unsafe_alloc_special(4, 512);
+}
+```
+
 
 [rustfmt configuration]: https://github.com/mullvad/mullvadvpn-app/blob/master/rustfmt.toml
 [main page]: ./README.md
