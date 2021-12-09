@@ -3,6 +3,61 @@
 These documents aim to be the source of information for how we architect, design and format
 program code in various languages and tools.
 
+## Complexity, edge cases and problem scope
+
+When reading specifications for a feature and trying to come up with a solution, or when
+you are implementing something and realize new edge cases: Think critically and reason
+about the situation and the actual users of this program. Reach out to other developers
+or product owners in case of doubt instead of assuming too much.
+
+Be smart about where corners can be cut. Don't try to cover every possible strange edge
+case directly in the PoC implementation. Make the unlikely scenarios result in errors
+and keep the code simple over writing something that is very generic or complex to
+support cases you don't yet know if they will happen.
+
+Don't make things a lot more generic than they need to be. If you need to generate a firewall
+rule that allows `foo`. Then call it `create_allow_foo_rule()` and not
+`create_rule(Action, Subject)` unless you actually need multiple rules where the code reuse
+outweighs the added complexity of being generic.
+
+## Code quality and documentation
+
+When you change or add something, leave the code base in an equally good, or better state
+than you found it in. Don't reduce the percentage of documentation by adding undocumented
+code. Don't rush to publish a PR without critically examining your own code and reflect on
+your chosen variable and function names, the level of documentation etc.
+Spending a few hours polishing stuff before having it reviewed and merged
+will definitely pay off by not having a lot of other people spend more time than that on trying
+to understand what it does.
+
+Productivity in the long term is more important than productivity in the short term. It is fine
+that the current feature or bugfix takes a bit longer to implement if it means that the
+developers coming here after you can spend less time doing what they need to do.
+
+### What to document
+
+Try to document code so it *adds* information and value. Don't just restate what the code
+already tells the reader. The best is of course to have the code be self explanatory.
+But some aspects of functionality is hard to explain in code only.
+
+Consider the following function signature:
+```rust
+fn spawn_cmd(command: String) -> CmdHandle
+```
+
+Adding `/// Spawns the command as a subprocess` adds almost no value to the reader. It's
+almost obvious from the function signature. What I as a reader and user of the function
+want *do want to know* is:
+* What happens if I drop the handle? Will the subprocess be killed?
+* Can `command` include the arguments? Or can I just run programs without arguments?
+* What will `stdin`, `stdout` and `stderr` of the child process be connected to?
+
+See the pattern? What does the function do that is not obvious from the signature?
+
+Not every single internal function needs documentation. As stated above, only things that the
+code does not express by itself should be documented. Functions and constants which are 100%
+obvious what they do or are used for does not need a comment.
+
 
 ## Code review and PR process
 
