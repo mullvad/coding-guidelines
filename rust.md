@@ -19,6 +19,20 @@ There is an [unofficial guide to design patterns in Rust] that it can be worth l
 There is an [unofficial book about Rust macro design] that can provide good design patterns for
 macros.
 
+## Imports and modules
+
+* Avoid wildcard imports. They generally make it harder to trace where a type comes from.
+  The exceptions are:
+  * Third party crate preludes - But prefer importing each item unless there are too many.
+  * Importing all variants of an enum in a small scope in order to match over all the variants
+    without prefixing every branch with the enum name. But prefer prefixing with enum name
+    unless doing so is very inconvenient.
+  * Importing `super::*` in a local test module.
+
+* Avoid importing standalone functions and macros directly into the namespace in most cases.
+  The module prefix can often both add valuable context and clearly show it's a
+  function defined elsewhere. So prefer `log::error!(...)` over `use log::error; error!(...)`.
+
 ### Other/custom design guidelines
 
 * Crate names should be kebab-case
