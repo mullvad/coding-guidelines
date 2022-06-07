@@ -64,6 +64,53 @@ macros.
   fn read_file(path: &Path) -> Vec<u8> { ... }
   ```
 
+## Converting between types
+
+### Integers (avoid `as`)
+
+Avoid converting between integer types using `as`. It can silently cause values to be truncated
+and introduce bugs if types change or depend on external factors, such as the machine it's
+built on. Consider the follwing code:
+
+```rust
+fn compute_index() -> u16 {...}
+
+api_with_u32_indexes(compute_index() as u32);
+```
+
+This is sound code right now. But what if `compute_index` is changed to return `u64`s in the
+future? Then the casting can truncate values and call `api_with_u32_indexes` with an invalid value.
+The compiler won't say a thing. To catch this potential issue at compile time, always prefer:
+
+```rust
+api_with_u32_indexes(u32::from(compute_index()));
+```
+
+This will fail to compile if the return type of `compute_index` ever changes to something that
+is not guaranteed to fit into a `u32`.
+
+When dealing with integer conversion from wider to narrower types (`From` is not implemented),
+use `TryFrom` to trigger an error if an overflow happens, instead of continuing the execution
+with incorrect values. The exception is of course if truncating too large values is the desired
+behavior.
+
+### Prefer `From` over `Into`
+
+When converting a `Foo` into a `Bar`, prefer `Bar::from(foo)` over `foo.into()`. The
+former is easier to understand and less automatic inference is involved.
+With `.into()` it can be really hard to figure out what the output type is going to be.
+
+The exception is generic code where using `From` is not really possible. Such as:
+
+```rust
+fn connect(address: impl Into<SocketAddr>) {
+    let address = address.into();
+    ...
+}
+```
+
+The same applies to `TryFrom` vs `TryInto`.
+
 ## Unsafe code
 
 ### Writing unsafe code (`unsafe fn`)
