@@ -146,6 +146,23 @@ unsafe {
 }
 ```
 
+## Cargo dependencies
+
+### Git dependencies
+
+In general, prefer crates released on crates.io over depending on git repositories in `Cargo.toml`.
+Git repositories are not as persistant over time and not guaranteed to always be online etc.
+But there are exceptions. You might need to depend on a git repository dependency for unpublished
+crates and similar. If depending on a git repository always do the following:
+
+* If it's someone else's repository, fork it into our own organization/account. This is to take
+  more control over the availability. This prevents the repository from suddenly being gone.
+* Always specify the commit hash to depend on, never just a branch or similar. Branches can move
+  and then the dependency is changing under our feet without us changing anything. In `Cargo.toml`
+  specify `rev = ...` and never `branch = ...`.
+
+
+<!-- # Links -->
 
 [rustfmt configuration]: https://github.com/mullvad/mullvadvpn-app/blob/master/rustfmt.toml
 [main page]: ./README.md
