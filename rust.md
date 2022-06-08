@@ -148,6 +148,21 @@ unsafe {
 
 ## Cargo dependencies
 
+### Specifying version numbers
+
+When adding a new dependency, prefer specifying the full version number of the latest release.
+If adding `regex` and the latest release is `1.5.6` specify `regex = "1.5.6"`. In general,
+avoid adding just `"1"` or `"1.5"`. This is because Cargo will automatically pull in the latest
+version allowed by your version specification. Meaning it will pull in `1.5.6` even if you specify
+`1`. Then you can accidentally write code that needs `regex` `>1.x` where `x` is greater than `0`.
+
+If you specify a version requirement looser than the exact latest version anyway, you need to
+make sure the code you write compiles on the oldest version of that crate allowed by the
+version specification. This can be done with the following command:
+```
+cargo +nightly update -Z minimal-versions && cargo check
+```
+
 ### Git dependencies
 
 In general, prefer crates released on crates.io over depending on git repositories in `Cargo.toml`.
