@@ -137,7 +137,7 @@ make sure that you `shift` by that amount of arguments.
 Finally make sure that the `case` statement is followed by a `shift`.
 
 ```bash
-while [ ! "$#" -gt 0 ]; do
+while [ "$#" -gt 0 ]; do
     case "$1" in
         "--foo")
             foo_set="true"
