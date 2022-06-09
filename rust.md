@@ -146,6 +146,38 @@ unsafe {
 }
 ```
 
+## Cargo dependencies
+
+### Specifying version numbers
+
+When adding a new dependency, prefer specifying the full version number of the latest release.
+If adding `regex` and the latest release is `1.5.6` specify `regex = "1.5.6"`. In general,
+avoid adding just `"1"` or `"1.5"`. This is because Cargo will automatically pull in the latest
+version allowed by your version specification. Meaning it will pull in `1.5.6` even if you specify
+`1`. Then you can accidentally write code that needs `regex` `>1.x` where `x` is greater than `0`.
+
+If you specify a version requirement looser than the exact latest version anyway, you need to
+make sure the code you write compiles on the oldest version of that crate allowed by the
+version specification. This can be done with the following command:
+```
+cargo +nightly update -Z minimal-versions && cargo check
+```
+
+### Git dependencies
+
+In general, prefer crates released on crates.io over depending on git repositories in `Cargo.toml`.
+Git repositories are not as persistant over time and not guaranteed to always be online etc.
+But there are exceptions. You might need to depend on a git repository dependency for unpublished
+crates and similar. If depending on a git repository always do the following:
+
+* If it's someone else's repository, fork it into our own organization/account. This is to take
+  more control over the availability. This prevents the repository from suddenly being gone.
+* Always specify the commit hash to depend on, never just a branch or similar. Branches can move
+  and then the dependency is changing under our feet without us changing anything. In `Cargo.toml`
+  specify `rev = ...` and never `branch = ...`.
+
+
+<!-- # Links -->
 
 [rustfmt configuration]: https://github.com/mullvad/mullvadvpn-app/blob/master/rustfmt.toml
 [main page]: ./README.md
