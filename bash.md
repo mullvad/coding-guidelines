@@ -128,6 +128,38 @@ function foo {
 }
 ```
 
+## Parsing command-line arguments
+
+When parsing command-line arguments that have flags use a `while` loop containing a `case` statement that
+matches on `$1`. Each case should set the appropriate settings for the flag and optionally parse further
+flag specific arguments by using `$2`, `$3`, etc. After parsing additional flag specific arguments
+make sure that you `shift` by that amount of arguments.
+Finally make sure that the `case` statement is followed by a `shift`.
+
+```bash
+while [ ! "$#" -gt 0 ]; do
+    case "$1" in
+        "--foo")
+            foo_set="true"
+            ;;
+        "--bar")
+            bar_arg_one=$2
+            bar_arg_two=$3
+            shift 2
+            ;;
+        -*)
+            echo "Unknown option \"$1\""
+            exit 1
+            ;;
+        *)
+            echo "Unknown argument"
+            exit 1
+            ;;
+    esac
+    shift
+done
+```
+
 ## Example
 
 Here is a script that does nothing useful, but it demonstrates the preferred formatting
