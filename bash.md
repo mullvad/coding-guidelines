@@ -130,13 +130,18 @@ function foo {
 
 ## Parsing command-line arguments
 
-When parsing command-line arguments that have flags use a `while` loop containing a `case` statement that
-matches on `$1`. Each case should set the appropriate settings for the flag and optionally parse further
-flag specific arguments by using `$2`, `$3`, etc. After parsing additional flag specific arguments
-make sure that you `shift` by that amount of arguments.
+When parsing command-line arguments that have flags, use a `while` loop containing a `case`
+statement that matches on `$1`. Each case should set the appropriate settings for the flag and
+optionally parse further flag specific arguments by using `$2`, `$3`, etc.
+After parsing additional flag specific arguments make sure that you `shift` by that amount of
+arguments. Because we almost always use `set -u` it is important that all variables that are set
+during parsing have been initialized before parsing, otherwise they will not have a default value.
 Finally make sure that the `case` statement is followed by a `shift`.
 
 ```bash
+foo_set="false"
+bar_arg_one="default value"
+bar_arg_two="default value"
 while [ "$#" -gt 0 ]; do
     case "$1" in
         "--foo")
@@ -147,12 +152,8 @@ while [ "$#" -gt 0 ]; do
             bar_arg_two=$3
             shift 2
             ;;
-        -*)
-            echo "Unknown option \"$1\""
-            exit 1
-            ;;
         *)
-            echo "Unknown argument"
+            echo "Unknown argument: $1"
             exit 1
             ;;
     esac
