@@ -141,7 +141,7 @@ have been initialized before parsing, otherwise they will not have a default val
 of mandatory variables it can be checked after the the parsing.
 
 For positional arguments that are lacking a flag, if there are no other flag arguments then use
-`$1`, `$2`, etc and ommit the `while` loop all together. If there are some positional arguments
+`$1`, `$2`, etc and omit the `while` loop all together. If there are some positional arguments
 and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
 positional arguments together.
 Finally make sure that the `case` statement is followed by a `shift`.
@@ -164,6 +164,10 @@ while [ "$#" -gt 0 ]; do
             mandatory_positional_arg_1=$1
             mandatory_positional_arg_2=$2
             shift 1
+            ;;
+        -*)
+            echo "Unknown option \"$1\""
+            exit 1
             ;;
     esac
     shift
