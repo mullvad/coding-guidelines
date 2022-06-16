@@ -134,8 +134,16 @@ When parsing command-line arguments that have flags, use a `while` loop containi
 statement that matches on `$1`. Each case should set the appropriate settings for the flag and
 optionally parse further flag specific arguments by using `$2`, `$3`, etc.
 After parsing additional flag specific arguments make sure that you `shift` by that amount of
-arguments. Because we almost always use `set -u` it is important that all variables that are set
-during parsing have been initialized before parsing, otherwise they will not have a default value.
+arguments.
+
+Because we almost always use `set -u` it is important that all non-mandatory variables
+have been initialized before parsing, otherwise they will not have a default value. In the case
+of mandatory variables it can be checked after the the parsing.
+
+For positional arguments that are lacking a flag, if there are no other flag arguments then use
+`$1`, `$2`, etc and ommit the `while` loop all together. If there are some positional arguments
+and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
+positional arguments together.
 Finally make sure that the `case` statement is followed by a `shift`.
 
 ```bash
@@ -153,8 +161,9 @@ while [ "$#" -gt 0 ]; do
             shift 2
             ;;
         *)
-            echo "Unknown argument: $1"
-            exit 1
+            mandatory_positional_arg_1=$1
+            mandatory_positional_arg_2=$2
+            shift 1
             ;;
     esac
     shift
