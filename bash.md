@@ -140,7 +140,7 @@ Because we almost always use `set -u` it is important that all non-mandatory var
 have been initialized before parsing, otherwise they will not have a default value. In the case
 of mandatory variables it can be [checked](Check if variable is defined) after the parsing.
 
-For positional arguments , if there are no other flag arguments then use `$1`, `$2`, etc and
+For scripts with only positional arguments, just use `$1`, `$2`, etc and
 omit the `while` loop all together. If there are some positional arguments
 and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
 positional arguments together. If there are only flag arguments then use `*)` instead of `-*)`
