@@ -138,36 +138,44 @@ arguments.
 
 Because we almost always use `set -u` it is important that all non-mandatory variables
 have been initialized before parsing, otherwise they will not have a default value. In the case
-of mandatory variables it can be checked after the the parsing.
+of mandatory variables it can be checked after the parsing.
 
-For positional arguments that are lacking a flag, if there are no other flag arguments then use
-`$1`, `$2`, etc and omit the `while` loop all together. If there are some positional arguments
+For positional arguments , if there are no other flag arguments then use `$1`, `$2`, etc and
+omit the `while` loop all together. If there are some positional arguments
 and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
-positional arguments together.
-Finally make sure that the `case` statement is followed by a `shift`.
+positional arguments together. If there are only flag arguments then use `*)` instead of `-*)`
+as error handling. Finally make sure that the `case` statement is followed by a `shift`.
 
 ```bash
-foo_set="false"
-bar_arg_one="default value"
-bar_arg_two="default value"
+# Using only positional arguments
+database_path=$1
+database_password=$2
+server_ip=${3-:"127.0.0.1"}
+```
+
+```bash
+# Using both positional arguments and flag arguments
+use_compression="false"
+server_ip="127.0.0.1"
+server_port="5000"
 while [ "$#" -gt 0 ]; do
     case "$1" in
-        "--foo")
-            foo_set="true"
+        "--compression")
+            use_compression="true"
             ;;
-        "--bar")
-            bar_arg_one=$2
-            bar_arg_two=$3
+        "--server")
+            server_ip=$2
+            server_port=$3
             shift 2
-            ;;
-        *)
-            mandatory_positional_arg_1=$1
-            mandatory_positional_arg_2=$2
-            shift 1
             ;;
         -*)
             echo "Unknown option \"$1\""
             exit 1
+            ;;
+        *)
+            database_path=$1
+            database_password=$2
+            shift 1
             ;;
     esac
     shift
