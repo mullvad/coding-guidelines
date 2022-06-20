@@ -128,6 +128,77 @@ function foo {
 }
 ```
 
+## Parsing command-line arguments
+
+When parsing command-line arguments that have flags, use a `while` loop containing a `case`
+statement that matches on `$1`. Each case should set the appropriate settings for the flag and
+optionally parse further flag specific arguments by using `$2`, `$3`, etc.
+After parsing additional flag specific arguments make sure that you `shift` by that amount of
+arguments.
+
+Because we almost always use `set -u` it is important that all non-mandatory variables
+have been initialized before parsing, otherwise they will not have a default value. In the case
+of mandatory variables it can be [checked](#check-if-variable-is-defined) after the parsing.
+
+For scripts with only positional arguments, just use `$1`, `$2`, etc and
+omit the `while` loop all together. If there are some positional arguments
+and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
+positional arguments together. If there are only flag arguments then use `*)` instead of `-*)`
+as error handling. Finally make sure that the `case` statement is followed by a `shift`.
+
+```bash
+# Using only positional arguments
+database_path=$1
+database_password=$2
+server_ip=${3-:"127.0.0.1"}
+```
+
+```bash
+# Using only flag arguments
+use_compression="false"
+server_ip="127.0.0.1"
+server_port="5000"
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        "--compression")
+            use_compression="true"
+            ;;
+        "--server")
+            server_ip=$2
+            server_port=$3
+            shift 2
+            ;;
+        *)
+            echo "Unknown option \"$1\""
+            exit 1
+            ;;
+    esac
+    shift
+done
+```
+
+```bash
+# Using both positional arguments and flag arguments
+use_compression="false"
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        "--compression")
+            use_compression="true"
+            ;;
+        -*)
+            echo "Unknown option \"$1\""
+            exit 1
+            ;;
+        *)
+            database_path=$1
+            database_password=$2
+            shift 1
+            ;;
+    esac
+    shift
+done
+```
+
 ## Example
 
 Here is a script that does nothing useful, but it demonstrates the preferred formatting
