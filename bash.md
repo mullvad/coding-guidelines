@@ -138,7 +138,7 @@ arguments.
 
 Because we almost always use `set -u` it is important that all non-mandatory variables
 have been initialized before parsing, otherwise they will not have a default value. In the case
-of mandatory variables it can be [checked](Check if variable is defined) after the parsing.
+of mandatory variables it can be [checked](check-if-variable-is-defined) after the parsing.
 
 For scripts with only positional arguments, just use `$1`, `$2`, etc and
 omit the `while` loop all together. If there are some positional arguments
@@ -180,17 +180,10 @@ done
 ```bash
 # Using both positional arguments and flag arguments
 use_compression="false"
-server_ip="127.0.0.1"
-server_port="5000"
 while [ "$#" -gt 0 ]; do
     case "$1" in
         "--compression")
             use_compression="true"
-            ;;
-        "--server")
-            server_ip=$2
-            server_port=$3
-            shift 2
             ;;
         -*)
             echo "Unknown option \"$1\""
