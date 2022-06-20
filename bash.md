@@ -138,7 +138,7 @@ arguments.
 
 Because we almost always use `set -u` it is important that all non-mandatory variables
 have been initialized before parsing, otherwise they will not have a default value. In the case
-of mandatory variables it can be [checked](check-if-variable-is-defined) after the parsing.
+of mandatory variables it can be [checked](#check-if-variable-is-defined) after the parsing.
 
 For scripts with only positional arguments, just use `$1`, `$2`, etc and
 omit the `while` loop all together. If there are some positional arguments
