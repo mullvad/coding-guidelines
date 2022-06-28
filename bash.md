@@ -216,10 +216,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
 
 # Base compile flags valid all the time
-COMPILE_FLAGS="disable-foo enable-bar"
+compile_flags="disable-foo enable-bar"
 # Platform specific compile flags
 if [[ "$(uname -s)" != "Darwin" ]]; then
-    COMPILE_FLAGS+=" disable-apple"
+    compile_flags+=" disable-apple"
 fi
 
 # Script arguments count as constants
