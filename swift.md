@@ -12,7 +12,7 @@ with 2 additional rules:
    - Starting timers
    - Scheduling work
 
-Instead, an object should only start to operate after an explicit `start()` invocation.
+   Instead, an object should only start to operate after an explicit `start()` invocation.
 
 ## Formatting
 
