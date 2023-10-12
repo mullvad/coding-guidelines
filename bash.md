@@ -81,7 +81,7 @@ to check if a variable is set or unset is with `[[ -z ${my_variable+x} ]]`. Exam
 
 ```bash
 if [[ -z ${product_version+x} ]]; then
-    echo "Please pass product version as first argument"
+    echo "Please pass product version as first argument" >&2
     exit 1
 fi
 ```
@@ -171,7 +171,7 @@ while [ "$#" -gt 0 ]; do
             shift 2
             ;;
         *)
-            echo "Unknown option \"$1\""
+            echo "Unknown option \"$1\"" >&2
             exit 1
             ;;
     esac
