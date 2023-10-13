@@ -81,7 +81,7 @@ to check if a variable is set or unset is with `[[ -z ${my_variable+x} ]]`. Exam
 
 ```bash
 if [[ -z ${product_version+x} ]]; then
-    echo "Please pass product version as first argument"
+    echo "Please pass product version as first argument" >&2
     exit 1
 fi
 ```
@@ -134,27 +134,29 @@ When parsing command-line arguments that have flags, use a `while` loop containi
 statement that matches on `$1`. Each case should set the appropriate settings for the flag and
 optionally parse further flag specific arguments by using `$2`, `$3`, etc.
 After parsing additional flag specific arguments make sure that you `shift` by that amount of
-arguments.
+arguments. Finally make sure that the `case` statement is followed by a `shift`.
+
+If there are some positional arguments and some flag arguments then use the `*)` operator in
+the `case` statement and parse all of the positional arguments there.
+If there are only flag arguments then use `*)` instead of `-*)` as error handling.
 
 Because we almost always use `set -u` it is important that all non-mandatory variables
 have been initialized before parsing, otherwise they will not have a default value. In the case
 of mandatory variables it can be [checked](#check-if-variable-is-defined) after the parsing.
 
 For scripts with only positional arguments, just use `$1`, `$2`, etc and
-omit the `while` loop all together. If there are some positional arguments
-and some flag arguments then use the `*)` operator in the `case` statement and parse all of the
-positional arguments together. If there are only flag arguments then use `*)` instead of `-*)`
-as error handling. Finally make sure that the `case` statement is followed by a `shift`.
+omit the `while` loop altogether.
 
+### Using only positional arguments
 ```bash
-# Using only positional arguments
 database_path=$1
 database_password=$2
+# Arguments can have default values
 server_ip=${3-:"127.0.0.1"}
 ```
 
+### Using only flag arguments
 ```bash
-# Using only flag arguments
 use_compression="false"
 server_ip="127.0.0.1"
 server_port="5000"
@@ -169,7 +171,7 @@ while [ "$#" -gt 0 ]; do
             shift 2
             ;;
         *)
-            echo "Unknown option \"$1\""
+            echo "Unknown option \"$1\"" >&2
             exit 1
             ;;
     esac
@@ -177,26 +179,57 @@ while [ "$#" -gt 0 ]; do
 done
 ```
 
+### Using both positional arguments and flag arguments
 ```bash
-# Using both positional arguments and flag arguments
+# Usage: ./script.sh {--production|--staging} [--compress] <version> <output dir>
+
+# If the option has a default value, declare it before the parsing.
+# This means it will never be undefined after the parsing.
 use_compression="false"
+
 while [ "$#" -gt 0 ]; do
     case "$1" in
-        "--compression")
+        "--production")
+            environment="production"
+            ;;
+        "--staging")
+            environment="staging"
+            ;;
+        "--compress")
             use_compression="true"
             ;;
         -*)
-            echo "Unknown option \"$1\""
+            echo "Unknown option \"$1\"" >&2
             exit 1
             ;;
         *)
-            database_path=$1
-            database_password=$2
-            shift 1
+            # Decide which positional argument to assign depending on which ones
+            # have already been assigned to
+            if [[ -z ${version+x} ]]; then
+                version=$1
+            elif [[ -z ${output_dir+x} ]]; then
+                output_dir=$1
+            else
+                echo "Too many arguments" >&2
+                exit 1
+            fi
             ;;
     esac
     shift
 done
+
+if [[ -z ${environment+x} ]]; then
+    echo "Pass either --staging or --production to select target environment" >&2
+    exit 1
+fi
+if [[ -z ${version+x} ]]; then
+    echo "Please specify the version as the first positional argument" >&2
+    exit 1
+fi
+if [[ -z ${output_dir+x} ]]; then
+    echo "Please specify output directory as the second positional argument to this script" >&2
+    exit 1
+fi
 ```
 
 ## Example
