@@ -155,6 +155,8 @@ So sum it up the most important parts are:
 * Capitalize the subject line.
 * Do not end the subject line with a period.
 * Use the imperative mood in the subject line, starting with a verb.
+* Limit the subject line to 72 characters
+* Separate the subject from the body with two regular newlines ('\n')
 
 ### History
 
