@@ -155,8 +155,12 @@ So sum it up the most important parts are:
 * Capitalize the subject line.
 * Do not end the subject line with a period.
 * Use the imperative mood in the subject line, starting with a verb.
-* Limit the subject line to 72 characters
+* Limit the subject line to 72 characters*
 * Separate the subject from the body with two regular newlines ('\n')
+
+\* The only exceptions to this length limit are merge and revert commits. They should have the
+commit message git inserts by default (`Merge branch '<name_of_branch>'` and
+`Revert "<subject_of_reverted_commit"`) even if the total length exceeds the guideline.
 
 ### History
 
