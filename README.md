@@ -147,7 +147,7 @@ variable name.
 
 ### Commit messages
 
-Here is a generally nice guide to how to write good commit messages:
+Here is a nice guide on how to write good commit messages:
 https://chris.beams.io/posts/git-commit/
 
 So sum it up the most important parts are:
