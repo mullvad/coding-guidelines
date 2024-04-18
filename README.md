@@ -156,6 +156,32 @@ So sum it up the most important parts are:
 * Do not end the subject line with a period.
 * Use the imperative mood in the subject line.
 
+### Branch naming
+
+Use kebab case git branch names with lowercase letters. For example `add-links-to-readme`.
+
+An exception to the style is if a part in the branch name requires a specific way of writing to
+not lose its meaning/technical context. Examples include:
+
+* `suppress-CVE-2026-3872` - "CVE-2026-3872" is a unique identifier. Changing it could change its
+  meaning and/or make it less recognizable.
+* `fix-multicast-address-translation-IOS-123` - "DES-123" being a hypothetical ticketing system
+  identifier requiring a specific format for the automation to work.
+
+Try to avoid adding exact programming terms that do not need to be in the title, without
+reducing the information in the name too much. Instead of `implement-Clone-for-IpAddr` prefer
+`make-ip-address-type-clonable`.
+
+Try to describe what is being done in the branch, without being too verbose. High signal to noise
+ratio is important. Some examples:
+* Instead of `improve-readme` use `add-build-instructions`
+* Instead of `fix-routing-table` use `fix-linux-lan-route-parsing`
+
+There is no exact length limit on branch names, but try to stay relatively short.
+
+Slashes in branch names are allowed if the team use them consistently and according to an agreed
+upon system. Examples could include `android/fix-icon-rotation` or `linux/feature/add-multihop`.
+
 ### History
 
 Prefer to let the history represent how the project evolves rather than exactly how the developer
