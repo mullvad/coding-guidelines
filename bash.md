@@ -58,8 +58,7 @@ prefer to make the argument mandatory and pass `.` instead.
 * Constant variables use `SCREAMING_SNAKE_CASE` names.
 
   This means variables that are assigned once and then never modified, and that only depend on
-  other constant variables. The exception to "never modified" is where multiple statements are
-  used to compute the content of the "constant" (see `COMPILE_FLAGS` in example at the end).
+  other constant variables.
 
 * Non-constant variables use `snake_case` names.
 
@@ -69,6 +68,10 @@ prefer to make the argument mandatory and pass `.` instead.
 
 Environment variables and arguments to the script are considered constants. But arguments in
 functions are not constants.
+
+Constant variables should always have `readonly` applied to them. Non-constant variables can
+also have `readonly` applied to them assuming they are never modified and using `readonly` is
+not too verbose.
 
 ## Conditions and branching
 
@@ -246,10 +249,10 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
 
 # Base compile flags valid all the time
-COMPILE_FLAGS="disable-foo enable-bar"
+compile_flags="disable-foo enable-bar"
 # Platform specific compile flags
 if [[ "$(uname -s)" != "Darwin" ]]; then
-    COMPILE_FLAGS+=" disable-apple"
+    compile_flags+=" disable-apple"
 fi
 
 # Script arguments count as constants
