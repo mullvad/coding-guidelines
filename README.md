@@ -219,6 +219,19 @@ Consider squashing it to something like this before merge:
 * 4d3ca65 (origin/master, master) Merge branch 'previous-feature'
 ```
 
+#### Co-authored commits
+
+When squashing commits from multiple authors into one commit, add co-author information to the
+commit message for any of the remaining authors:
+
+```bash
+$ git commit -m "A very good commit.
+>
+>
+Co-authored-by: Name 1 <name1@example.com>
+Co-authored-by: Name 2 <name2@example.com>"
+```
+
 
 ## Changelogs
 
