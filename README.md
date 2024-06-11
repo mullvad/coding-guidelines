@@ -221,9 +221,9 @@ Consider squashing it to something like this before merge:
 
 ### Co-authored commits
 
-When multiple authors have made significant contributions to a commit&mdash;for instance, when
-squashing large commits from multiple authors into one commit&mdash;add co-author information to the
-commit message for the remaining authors:
+When multiple authors have made significant contributions to a commit, add co-author information
+to the commit message for the remaining authors. For example, when squashing large commits from
+multiple authors into one commit.
 
 ```bash
 $ git commit -m "A very good commit.
