@@ -1,5 +1,8 @@
 # Rust coding guidelines
 
+This document is about best practices and rules when writing Rust code.
+For guidelines on publishing to crates.io, see: [crates.io](./crates-io.md).
+
 ## Formatting
 
 All code should be formatted with the latest release of rustfmt. The [rustfmt configuration] in the
