@@ -45,6 +45,16 @@ up `README.md` anyway.
 All crates owned by Mullvad should maintain a changelog on the
 ["Keep a Changelog"] format in a file named `CHANGELOG.md` in the git repository.
 
+## Vulnerability reporting
+
+Github repositories for crates owned by Mullvad should have Github's
+"Private vulnerability reporting" enabled.
+This allows developers and security researchers to submit vulnerability reports without
+them becoming public immediately.
+
+The git repository should have a [`SECURITY.md`] file explaining how to report security
+vulnerabilities. A good default can be found in [SECURITY.md.example](./SECURITY.md.example).
+
 ## Authors
 
 The `authors` metadata field in `Cargo.toml` should be set to `["Mullvad VPN"]` for crates
@@ -114,3 +124,4 @@ should be published, and maybe a [RustSec] advisory should be created, if releva
 [Mullvad VPN app]: https://github.com/mullvad/mullvadvpn-app/
 [`rust-version`]: https://doc.rust-lang.org/cargo/reference/rust-version.html
 ["Keep a Changelog"]: https://keepachangelog.com
+[`SECURITY.md`]: https://docs.github.com/en/code-security/getting-started/adding-a-security-policy-to-your-repository
