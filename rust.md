@@ -1,6 +1,7 @@
 # Rust coding guidelines
 
 This document is about best practices and rules when writing Rust code.
+
 For guidelines on publishing to crates.io, see: [crates.io](./crates-io.md).
 
 ## Formatting
@@ -10,12 +11,22 @@ mullvadvpn-app repository is the reference configuration, in order to not have t
 
 Also see the [main page] for general file format standards to follow.
 
+## Linting
+
+Use at least the lints listed in [rust/Cargo.toml](rust/Cargo.toml).
+
+## CI
+
+All repositories containing Rust should have a CI pipeline that makes sure no compilation errors,
+warnings or test failures are merged to the main branch. Furthermore it should check that the code
+is formatted correctly and a bunch more stuff.
+
+See [.github/workflows/](.github/workflows/) for more details on bare minimum CI requirements.
+Some of these jobs might need to be adapted to work on a specific project.
+
 ## Code/API design
 
 Follow the standard [Rust API guidelines] as much as possible.
-
-Run clippy on all code and follow the recommendations it prints in all places where it is reasonable
-to follow.
 
 There is an [unofficial guide to design patterns in Rust] that it can be worth looking at.
 
