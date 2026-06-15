@@ -9,9 +9,9 @@ We follow the official [Kotlin coding conventions].
 
 ## Linting and formatting
 
-All code is formatted with [ktfmt] using `kotlinLangStyle`, and linted with [detekt]. The
-[detekt configuration] and [editorconfig] in the [mullvadvpn-app repository] are the reference
-configurations.
+All code is formatted with [ktfmt] using `kotlinLangStyle` and the [editorconfig] in the
+[mullvadvpn-app repository] is a reference configuration. We'll typically use additional
+linters such as [detekt], but that can differ on a project basis.
 
 Also see the [main page] for general file format standards to follow.
 
